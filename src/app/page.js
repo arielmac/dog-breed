@@ -5,8 +5,7 @@ import Dogs from './components/dogs';
 import Pagination from "./components/pagination"
 import Spinner from "react-bootstrap/Spinner";
 
-const API_BASE = "https://api.thedogapi.com/v1/";
-const API_KEY = "live_fQKGebgSyIvCSL41lcOefZOjMbwtsTdTzisy7KyBkC0ruA6I2gfGo3LNqp4Ln9cs";
+import { API_BASE, API_KEY, debounce } from "./assets/utils";
 
 export default function Home() {
   const [dogsData, setDogsData] = useState([]);
@@ -16,16 +15,6 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(15);
   const [isLoading, setIsLoading] = useState(true);
-
-  function debounce(func, timeout = 1000) {
-    let timer;
-    return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        func.apply(this, args);
-      }, timeout);
-    };
-  }
 
   useEffect(() => {
     const fetchData = async (endpoint) => {
@@ -178,7 +167,11 @@ export default function Home() {
         ) : ''}
         
       </div>
-      <Pagination currentPage={currentPage} totalPosts={dogsData.length} postPerPage={postPerPage} paginate={paginate} />
+      <Pagination 
+        currentPage={currentPage}
+        totalPosts={dogsData.length}
+        postPerPage={postPerPage}
+        paginate={paginate}/>
     </div>
   );
 }

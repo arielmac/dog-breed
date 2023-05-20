@@ -3,7 +3,7 @@ import '../app/assets/globals.scss';
 
 export const metadata = {
   title: 'The Dog Breed Search',
-  description: '',
+  description: 'Search the cutest dog breed that suits your liking.',
 }
  
 export default function RootLayout({ children }) {

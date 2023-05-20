@@ -1,4 +1,14 @@
-# This is a Dog Breed Search app.
+# Dog Breed Search App for Dog enthusiasts! 
+We built this application to help you search for a dog breed that suits your liking!  
+It displays 15 dogs per page.  
+
+## Features
+1. Search Dogs
+2. Sort by Name, Life Span, or Height
+3. Pagination
+4. Image dynamic loading
+5. Debounce for 1000ms while typing on search bar or sorting
+6. Unit tests
 
 ## Getting Started
 
