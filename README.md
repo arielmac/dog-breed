@@ -15,7 +15,7 @@ It showcase 15 dogs per page.
 First, run the development server:
 ```bash
 npm run build
-npm run dev
+npm run start
 ```
 In your browser, visit [http://localhost:3000](http://localhost:3000) <br/><br/>
 
@@ -28,7 +28,7 @@ npm run build
 ```
 Run the development server:
 ```bash
-npm run build
+npm run start
 ```
 Run the test script in the `new terminal`
 ```bash
