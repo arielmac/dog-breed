@@ -1,6 +1,6 @@
 # Dog Breed Search App for Dog Enthusiasts! 
 We built this application to help you search for a dog breed that suits your liking!  
-It showcase 15 dogs per page.
+It showcase 15 dogs per page. [Try it now](https://nx76o3-3000.csb.app/).
 
 ## Features
 1. Search Dogs
@@ -9,6 +9,7 @@ It showcase 15 dogs per page.
 4. Image dynamic loading
 5. Debounce for 1000ms while typing on search bar or sorting
 6. Unit tests
+7. Responsive UI (drag the table to the left for non-desktop devices)
 
 ## Getting Started
 
