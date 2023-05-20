@@ -1,6 +1,6 @@
-# Dog Breed Search App for Dog enthusiasts! 
+# Dog Breed Search App for Dog Enthusiasts! 
 We built this application to help you search for a dog breed that suits your liking!  
-It displays 15 dogs per page.  
+It showcase 15 dogs per page.
 
 ## Features
 1. Search Dogs
