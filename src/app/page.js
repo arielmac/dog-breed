@@ -100,6 +100,7 @@ export default function Home() {
       }
     };
     fetchData(`${API_BASE}breeds/search/?api_key=${API_KEY}&q=${searchInput}`);
+    setSearchText(searchInput);
     setSortBy('name');
     setOrderBy(true);
   }
