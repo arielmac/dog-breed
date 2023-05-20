@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { FaSortDown, FaSortUp } from "react-icons/fa";
 import Dogs from './components/dogs';
 import Pagination from "./components/pagination"
@@ -16,26 +16,8 @@ export default function Home() {
   const [postPerPage] = useState(15);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async (endpoint) => {
-      try {
-        const response = await fetch(endpoint);
-        const jsonData = await response.json();
-        setDogsData(jsonData);
-        setIsLoading(false);
-      } catch (error) {
-        console.log("Error:", error);
-      }
-    };
-    
-    if (searchText.length) {
-      fetchData(`${API_BASE}breeds/search/?api_key=${API_KEY}&q=${searchText}`);
-    } else {
-      fetchData(`${API_BASE}breeds/?api_key=${API_KEY}`);
-    }
-  }, [searchText]);
 
-  const sortByName = () => {
+  const sortByName = useCallback(() => {
     setOrderBy(!orderBy);
     setSortBy('name');
     const newDogsData = [...dogsData];
@@ -47,7 +29,7 @@ export default function Home() {
     });
     setDogsData(newDogsData);
     setCurrentPage(1);
-  };
+  }, [dogsData, orderBy]);
 
   const sortLifeSpan = () => {
     setOrderBy(!orderBy);
@@ -92,6 +74,36 @@ export default function Home() {
     return <FaSortUp />;
   };
 
+  useEffect(() => {
+    const fetchData = async (endpoint) => {
+      try {
+        const response = await fetch(endpoint);
+        const jsonData = await response.json();
+        setDogsData(jsonData);
+        setIsLoading(false);
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+    fetchData(`${API_BASE}breeds/?api_key=${API_KEY}`);
+  },[]);
+
+  const onSearch = (searchInput) => {
+    const fetchData = async (endpoint) => {
+      try {
+        const response = await fetch(endpoint);
+        const jsonData = await response.json();
+        setDogsData(jsonData);
+        setIsLoading(false);
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+    fetchData(`${API_BASE}breeds/search/?api_key=${API_KEY}&q=${searchInput}`);
+    setSortBy('name');
+    setOrderBy(true);
+  }
+
   // Get current list to display
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
@@ -109,7 +121,7 @@ export default function Home() {
           className="dogs__search-input"
           type="text"
           placeholder="type here..."
-          onChange={debounce((e) => setSearchText(e.target.value))}
+          onChange={debounce((e) => onSearch(e.target.value))}
         />
       </div>
       <div className="dogs__result-content">
