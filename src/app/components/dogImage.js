@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Spinner from 'react-bootstrap/Spinner';
-
-const API_BASE = "https://api.thedogapi.com/v1/";
+import { API_BASE } from "../assets/utils";
 
 export default function DogImage({imageId, dogName}) {
   const [dogImage, setDogImage] = useState({});

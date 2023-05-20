@@ -1,5 +1,4 @@
 export default function Pagination({currentPage, postPerPage, totalPosts, paginate}) {
-
   let pageNumbers = [];
   for(let i = 1; i <= Math.ceil(totalPosts / postPerPage); i++) {
     pageNumbers.push(i);
