@@ -74,32 +74,27 @@ export default function Home() {
     return <FaSortUp />;
   };
 
+  const fetchData = async (endpoint) => {
+    try {
+      const response = await fetch(endpoint);
+      const jsonData = await response.json();
+      setDogsData(jsonData);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async (endpoint) => {
-      try {
-        const response = await fetch(endpoint);
-        const jsonData = await response.json();
-        setDogsData(jsonData);
-        setIsLoading(false);
-      } catch (error) {
-        console.log("Error:", error);
-      }
-    };
     fetchData(`${API_BASE}breeds/?api_key=${API_KEY}`);
   },[]);
 
   const onSearch = (searchInput) => {
-    const fetchData = async (endpoint) => {
-      try {
-        const response = await fetch(endpoint);
-        const jsonData = await response.json();
-        setDogsData(jsonData);
-        setIsLoading(false);
-      } catch (error) {
-        console.log("Error:", error);
-      }
-    };
-    fetchData(`${API_BASE}breeds/search/?api_key=${API_KEY}&q=${searchInput}`);
+    if(searchInput.length)
+      fetchData(`${API_BASE}breeds/search/?api_key=${API_KEY}&q=${searchInput}`);
+    else
+      fetchData(`${API_BASE}breeds/?api_key=${API_KEY}`);
+      
     setSearchText(searchInput);
     setSortBy('name');
     setOrderBy(true);
