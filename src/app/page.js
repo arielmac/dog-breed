@@ -9,71 +9,15 @@ import { API_BASE, API_KEY, debounce } from "./assets/utils";
 
 export default function Home() {
   const [dogsData, setDogsData] = useState([]);
+  const [dogsList, setDogsList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState('name');
-  const [orderBy, setOrderBy] = useState(true);
+  const [orderBy, setOrderBy] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(15);
   const [isLoading, setIsLoading] = useState(true);
 
-
-  const sortByName = useCallback(() => {
-    setOrderBy(!orderBy);
-    setSortBy('name');
-    const newDogsData = [...dogsData];
-    newDogsData.sort((dogA, dogB) => {
-      if (!orderBy) {
-        return dogA.name.localeCompare(dogB.name);
-      }
-      return dogB.name.localeCompare(dogA.name);
-    });
-    setDogsData(newDogsData);
-    setCurrentPage(1);
-  }, [dogsData, orderBy]);
-
-  const sortLifeSpan = () => {
-    setOrderBy(!orderBy);
-    setSortBy('lifespan');
-
-    const newDogsData = [...dogsData];
-    newDogsData.sort((dogA, dogB) => {
-      const dogALifespan = parseInt(dogA.life_span.match(/\d+/));
-      const dogBLifespan = parseInt(dogB.life_span.match(/\d+/));
-
-      if (!orderBy) {
-        return dogALifespan - dogBLifespan;
-      }
-      return dogBLifespan - dogALifespan;
-    });
-    setDogsData(newDogsData);
-    setCurrentPage(1);
-  };
-
-  const sortHeight = () => {
-    setOrderBy(!orderBy);
-    setSortBy('height');
-
-    const newDogsData = [...dogsData];
-    newDogsData.sort((dogA, dogB) => {
-      const dogAHeight = parseInt(dogA.height.imperial.match(/\d+/));
-      const dogBHeight = parseInt(dogB.height.imperial.match(/\d+/));
-
-      if (!orderBy) {
-        return dogAHeight - dogBHeight;
-      }
-      return dogBHeight - dogAHeight;
-    });
-    setDogsData(newDogsData);
-    setCurrentPage(1);
-  };
-
-  const showArrow = () => {
-    if (orderBy) {
-      return <FaSortDown />;
-    }
-    return <FaSortUp />;
-  };
-
+  // Fetch the data from the given endpoint
   const fetchData = async (endpoint) => {
     try {
       const response = await fetch(endpoint);
@@ -85,10 +29,62 @@ export default function Home() {
     }
   };
 
+  // Get the dogs data on page load
   useEffect(() => {
     fetchData(`${API_BASE}breeds/?api_key=${API_KEY}`);
   },[]);
 
+  // Manage side-effect for sorting the data
+  useEffect(() => {
+    const newDogsData = [...dogsData];
+
+    newDogsData.sort((dogA, dogB) => {
+      if( sortBy === 'name') {
+        if (!orderBy) {
+          return dogA.name.localeCompare(dogB.name);
+        }
+        return dogB.name.localeCompare(dogA.name);
+      } else if( sortBy === 'lifespan') {
+        const dogALifespan = parseInt(dogA.life_span.match(/\d+/));
+        const dogBLifespan = parseInt(dogB.life_span.match(/\d+/));
+        if (!orderBy) {
+          return dogALifespan - dogBLifespan;
+        }
+        return dogBLifespan - dogALifespan;
+      } else if( sortBy === 'height') {
+        const dogALifespan = parseInt(dogA.height.imperial.match(/\d+/));
+        const dogBLifespan = parseInt(dogB.height.imperial.match(/\d+/));
+        if (!orderBy) {
+          return dogALifespan - dogBLifespan;
+        }
+        return dogBLifespan - dogALifespan;
+      }
+    });
+    setDogsList(newDogsData);
+    // Always reset the current page to 1 after sorting
+    setCurrentPage(1);
+
+  },[dogsData, orderBy, sortBy]);
+
+  // Display the sort arrow depending on the current order status
+  const showArrow = () => {
+    if (orderBy) {
+      return <FaSortDown />;
+    }
+    return <FaSortUp />;
+  };
+
+  // Set the sortBy status
+  const onSort = (sortByNew) => {
+    if ( sortBy !== sortByNew )
+      setOrderBy(false);
+    else
+      setOrderBy(!orderBy);
+
+    setSortBy(sortByNew);
+  };
+
+  // Get the dogs data by search input
   const onSearch = (searchInput) => {
     if(searchInput.length)
       fetchData(`${API_BASE}breeds/search/?api_key=${API_KEY}&q=${searchInput}`);
@@ -97,15 +93,16 @@ export default function Home() {
       
     setSearchText(searchInput);
     setSortBy('name');
-    setOrderBy(true);
+    setOrderBy(false);
     setCurrentPage(1);
   }
 
   // Get current list to display
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentLists = dogsData.slice(indexOfFirstPost, indexOfLastPost);
+  const currentLists = dogsList.slice(indexOfFirstPost, indexOfLastPost);
 
+  // Set current page number for pagination
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   }
@@ -126,7 +123,7 @@ export default function Home() {
           <thead>
             <tr>
               <th
-                onClick={debounce(() => sortByName(), 300)}
+                onClick={debounce(() => onSort('name'), 300)}
                 className="dogs__thead-name"
                 data-column="name"
               >
@@ -136,7 +133,7 @@ export default function Home() {
                 </div>
               </th>
               <th
-                onClick={debounce(() => sortLifeSpan(), 300)}
+                onClick={debounce(() => onSort('lifespan'), 300)}
                 className="dogs__thead-lifespan"
                 data-column="lifespan"
               >
@@ -146,7 +143,7 @@ export default function Home() {
                 </div>
               </th>
               <th
-                onClick={debounce(() => sortHeight(), 300)}
+                onClick={debounce(() => onSort('height'), 300)}
                 className="dogs__thead-height"
                 data-column="height"
               >
