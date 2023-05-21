@@ -74,6 +74,7 @@ body {
     }
     td.dogs__col-name {
       padding-right: 40px;
+      line-height: 1.2;
     }
   }
   &__image {
@@ -172,6 +173,15 @@ body {
     }
     &__search-input {
       width: 100%;
+    }
+    &__image {
+      width: 100px;
+      height: 100px;
+    }
+    &__table {
+      th, td {
+        padding: 10px;
+      }
     }
   }
 }
