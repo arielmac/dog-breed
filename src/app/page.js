@@ -98,6 +98,7 @@ export default function Home() {
     setSearchText(searchInput);
     setSortBy('name');
     setOrderBy(true);
+    setCurrentPage(1);
   }
 
   // Get current list to display
