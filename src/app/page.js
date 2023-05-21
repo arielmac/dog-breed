@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useCallback, useState } from "react";
-import { FaSortDown, FaSortUp } from "react-icons/fa";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import Dogs from './components/dogs';
 import Pagination from "./components/pagination"
 import Spinner from "react-bootstrap/Spinner";
@@ -129,7 +129,7 @@ export default function Home() {
               >
                 <div>
                   <span>Name</span>{" "}
-                  {sortBy === "name" ? showArrow() : null}
+                  {sortBy === "name" ? showArrow() : <FaSort />}
                 </div>
               </th>
               <th
@@ -139,7 +139,7 @@ export default function Home() {
               >
                 <div>
                   <span>Life span</span>{" "}
-                  {sortBy === "lifespan" ? showArrow() : null}
+                  {sortBy === "lifespan" ? showArrow() : <FaSort />}
                 </div>
               </th>
               <th
@@ -149,7 +149,7 @@ export default function Home() {
               >
                 <div>
                   <span>Height</span>{" "}
-                  {sortBy === "height" ? showArrow() : null}
+                  {sortBy === "height" ? showArrow() : <FaSort />}
                 </div>
               </th>
               <th>Weight</th>
