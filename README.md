@@ -51,4 +51,4 @@ In the browser:
 2. Should sort the **Name** column in `descending` order after clicking on the **Name** column header.
 3. Should sort the **Life Span** in `ascending` order after clicking on the **Life Span** column header.
 4. Should sort the **Height** span column in `ascending` order after clicking on the **Height** column header.
-5. Should debounce the input event **after 1000ms**; and not debounce if **below 1000ms**.
+5. Should debounce the input event if the input change interval is **< 1000 ms**; and fire the event if the interval reached **1000ms**
