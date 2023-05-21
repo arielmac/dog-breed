@@ -22,7 +22,6 @@ describe('The Dog Breed Homepage Test', () => {
     });
   });
 
-
   it('Should sort the Name column in descending order', () => {
     cy.wait(2000)
     // Click on the name column header to trigger the sorting
@@ -41,7 +40,7 @@ describe('The Dog Breed Homepage Test', () => {
     });
   })
 
-  it('Should sort the Life Span in descending order', () => {
+  it('Should sort the Life Span in ascending order', () => {
       cy.wait(2000)
       // Click on the lifespan column header to trigger the sorting
       cy.get('th[data-column="lifespan"]').click();
@@ -54,12 +53,12 @@ describe('The Dog Breed Homepage Test', () => {
       cy.get('tbody tr').find('td[data-column="lifespan"]').then((lifespanCells) => {
         // Get all values of lifespan and put in array
         const lifespanArray = Array.from(lifespanCells).map((cell) => cell.textContent.trim());
-        const sortedValues = [...lifespanArray].sort((a, b) => parseInt(b.match(/\d+/)) - parseInt(a.match(/\d+/)));
+        const sortedValues = [...lifespanArray].sort((a, b) => parseInt(a.match(/\d+/)) - parseInt(b.match(/\d+/)));
         expect(lifespanArray).to.deep.equal(sortedValues);
       });
   })
 
-  it('Should sort the Height span column in descending order', () => {
+  it('Should sort the Height span column in ascending order', () => {
     // Click on the height column header to trigger the sorting
     cy.get('th[data-column="height"]').click();
     // Wait for all network calls to finish
@@ -71,7 +70,7 @@ describe('The Dog Breed Homepage Test', () => {
     cy.get('tbody tr').find('td[data-column="height"]').then((heightCells) => {
       // Get all values of height and put in array
       const heightArray = Array.from(heightCells).map((cell) => cell.textContent.trim());
-      const sortedValues = [...heightArray].sort((a, b) => parseInt(b.match(/\d+/)) - parseInt(a.match(/\d+/)));
+      const sortedValues = [...heightArray].sort((a, b) => parseInt(a.match(/\d+/)) - parseInt(b.match(/\d+/)));
       expect(heightArray).to.deep.equal(sortedValues);
     });
   });
