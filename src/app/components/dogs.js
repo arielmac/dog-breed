@@ -1,7 +1,7 @@
 import DogImage from "./dogImage";
 
-export default function Dogs({dogsData}) {
-  return dogsData && dogsData.map((dog, index) => {
+export default function Dogs({dogsList}) {
+  return dogsList && dogsList.map((dog, index) => {
       return (
         <tr key={index}>
           <td className="dogs__col-name" data-column="name">

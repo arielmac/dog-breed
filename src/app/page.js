@@ -159,14 +159,14 @@ export default function Home() {
               <th>Temperament</th>
             </tr>
           </thead>
-          <tbody><Dogs dogsData={currentLists} /></tbody>
+          <tbody><Dogs dogsList={currentLists} /></tbody>
         </table>
-        {!dogsData.length && isLoading ? (
+        {!dogsList.length && isLoading ? (
           <div className="dogs__no-result">
             <Spinner />
           </div>
         ) : ''}
-        {!dogsData.length && ! isLoading ? (
+        {!dogsList.length && ! isLoading ? (
           <div className="dogs__no-result">
             <h3>No results found</h3>
           </div>
@@ -175,7 +175,7 @@ export default function Home() {
       </div>
       <Pagination 
         currentPage={currentPage}
-        totalPosts={dogsData.length}
+        totalPosts={dogsList.length}
         postPerPage={postPerPage}
         paginate={paginate}/>
     </div>
